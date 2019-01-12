@@ -10,6 +10,7 @@
     "mobx": "^5.8.0",
     "mobx-react": "^5.4.3",
     "mobx-utils": "^5.1.0",
+    "node-sass": "^4.11.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-scripts": "2.1.3",
