@@ -1,0 +1,7 @@
+import { observable } from "mobx"
+import uuid4 from "uuid/v4"
+
+export class {{ pascalCase name }} {
+  readonly id = uuid4()
+  @observable prop = "value"
+}
