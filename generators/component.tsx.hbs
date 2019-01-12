@@ -1,11 +1,13 @@
 import { observer } from "mobx-react"
 import React, { Component } from "react"
 
+import style from "./{{ pascalCase name }}.module.scss"
+
 export interface {{ pascalCase name }}Props {}
 
 @observer
 export class {{ pascalCase name }} extends Component<{{ pascalCase name }}Props> {
   render() {
-    return <div />
+    return <div className={style.root}>{{ titleCase name }}</div>
   }
 }
