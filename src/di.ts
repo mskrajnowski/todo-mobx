@@ -1,5 +1,6 @@
 import { Container } from "inversify"
 
+import { TodosStore } from "./services/TodosStore"
 // plop: service import
 
 export const container = new Container()
@@ -13,6 +14,7 @@ export const getTagged = shortcut(container.getTagged)
 export const getAllTagged = shortcut(container.getAllTagged)
 
 export function bindDefault() {
+  container.bind(TodosStore).toSelf()
   // plop: service bind
 }
 
