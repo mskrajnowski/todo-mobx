@@ -1,5 +1,5 @@
-import { observable, computed, action, toJS } from "mobx"
-import { now, IPromiseBasedObservable, fromPromise } from "mobx-utils"
+import { observable, computed, action } from "mobx"
+import { now, fromPromise } from "mobx-utils"
 import uuid4 from "uuid/v4"
 
 import { Model, ModelConstructor } from "./Model"
