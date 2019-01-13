@@ -1,14 +1,14 @@
 import { injectable } from "inversify"
-import { observable, action, computed } from "mobx"
+import { observable, action, computed, autorun } from "mobx"
 
 import { Todo } from "../models/Todo"
 
 @injectable()
 export class TodosStore {
-  @observable private byId: { [id: string]: Todo | undefined } = {}
+  @observable private byId = observable.map<string, Todo>()
 
   @computed get all() {
-    return Object.keys(this.byId).map(key => this.byId[key]!)
+    return Array.from(this.byId.values())
   }
 
   @computed get active() {
@@ -18,7 +18,9 @@ export class TodosStore {
   }
 
   @computed get archived() {
-    return this.all.filter(({ isArchived }) => isArchived)
+    return this.all.filter(
+      ({ isArchived, isDeleted }) => isArchived && !isDeleted,
+    )
   }
 
   @computed get deleted() {
@@ -27,10 +29,10 @@ export class TodosStore {
 
   @action
   add(todo: Todo) {
-    this.byId[todo.id] = todo
+    this.byId.set(todo.id, todo)
   }
 
   findById(id: string) {
-    return this.byId[id]
+    return this.byId.get(id)
   }
 }
