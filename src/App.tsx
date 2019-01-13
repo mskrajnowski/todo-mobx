@@ -1,21 +1,34 @@
-import { computed, observable, autorun } from "mobx"
+import { computed } from "mobx"
 import { observer } from "mobx-react"
 import React, { Component } from "react"
+import orderBy from "lodash/orderBy"
 
 import { TodoCreator } from "./components/TodoCreator"
 import { TodoList } from "./components/TodoList"
 import { get } from "./di"
+import { Todo } from "./models/Todo"
 import { TodosStore } from "./services/TodosStore"
 
 @observer
 class App extends Component {
   private todos = get<TodosStore>(TodosStore)
 
-  @computed get pendingTodos() {
-    return this.todos.active.filter(({ isCompleted }) => !isCompleted)
+  private orderTodos(todos: Todo[]) {
+    return orderBy(todos, ["created"], ["desc"])
   }
-  @computed get completedTodos() {
-    return this.todos.active.filter(({ isCompleted }) => isCompleted)
+
+  @computed private get pendingTodos() {
+    return this.orderTodos(
+      this.todos.active.filter(({ isCompleted }) => !isCompleted),
+    )
+  }
+  @computed private get completedTodos() {
+    return this.orderTodos(
+      this.todos.active.filter(({ isCompleted }) => isCompleted),
+    )
+  }
+  @computed private get archivedTodos() {
+    return this.orderTodos(this.todos.archived)
   }
 
   render() {
@@ -35,10 +48,10 @@ class App extends Component {
             <TodoList todos={this.completedTodos} />
           </>
         )}
-        {this.todos.archived.length > 0 && (
+        {this.archivedTodos.length > 0 && (
           <>
             <h2>Archived</h2>
-            <TodoList todos={this.todos.archived} />
+            <TodoList todos={this.archivedTodos} />
           </>
         )}
       </div>
