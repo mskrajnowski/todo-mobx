@@ -19,12 +19,12 @@ export class Todo implements Model<Data> {
     return Boolean(this.due && this.due.getTime() < now())
   }
 
-  @action complete() {
-    this.isCompleted = true
+  @action toggleCompleted(completed = !this.isCompleted) {
+    this.isCompleted = completed
   }
 
-  @action archive() {
-    this.isArchived = true
+  @action toggleArchived(archived = !this.isArchived) {
+    this.isArchived = archived
   }
 
   @action delete() {

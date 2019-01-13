@@ -1,10 +1,10 @@
+import { action } from "mobx"
 import { observer } from "mobx-react"
 import React, { Component, ChangeEvent } from "react"
 
 import { Todo } from "../models/Todo"
 
 import style from "./TodoListItem.module.scss"
-import { action } from "mobx"
 
 export interface TodoListItemProps {
   todo: Todo
@@ -26,24 +26,26 @@ export class TodoListItem extends Component<TodoListItemProps> {
         <span className={style.label}>
           {todo.label} {todo.saving.state === "pending" && "(saving)"}
         </span>
-        <button type="button" onClick={this.archive}>
-          Archive
+        <button type="button" onClick={this.toggleArchived}>
+          {todo.isArchived ? "Restore" : "Archive"}
         </button>
-        <button type="button" onClick={this.delete}>
-          Delete
-        </button>
+        {!todo.isDeleted && (
+          <button type="button" onClick={this.delete}>
+            Delete
+          </button>
+        )}
       </div>
     )
   }
 
   @action.bound
   private toggleCompleted(e: ChangeEvent<HTMLInputElement>) {
-    this.props.todo.isCompleted = e.target.checked
+    this.props.todo.toggleCompleted(e.target.checked)
   }
 
   @action.bound
-  private archive() {
-    this.props.todo.archive()
+  private toggleArchived() {
+    this.props.todo.toggleArchived()
   }
 
   @action.bound
