@@ -17,9 +17,18 @@ class App extends Component {
     return orderBy(todos, ["created"], ["desc"])
   }
 
+  @computed private get overdueTodos() {
+    return this.orderTodos(
+      this.todos.active.filter(
+        ({ isCompleted, isOverdue }) => !isCompleted && isOverdue,
+      ),
+    )
+  }
   @computed private get pendingTodos() {
     return this.orderTodos(
-      this.todos.active.filter(({ isCompleted }) => !isCompleted),
+      this.todos.active.filter(
+        ({ isCompleted, isOverdue }) => !isCompleted && !isOverdue,
+      ),
     )
   }
   @computed private get completedTodos() {
@@ -36,6 +45,12 @@ class App extends Component {
       <div>
         <h1>Todos</h1>
         <TodoCreator />
+        {this.overdueTodos.length > 0 && (
+          <>
+            <h2>Overdue</h2>
+            <TodoList todos={this.overdueTodos} />
+          </>
+        )}
         {this.pendingTodos.length > 0 && (
           <>
             <h2>Pending</h2>
