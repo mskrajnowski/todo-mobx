@@ -23,7 +23,9 @@ export class TodoListItem extends Component<TodoListItemProps> {
           checked={todo.isCompleted}
           onChange={this.toggleCompleted}
         />
-        <span className={style.label}>{todo.label}</span>
+        <span className={style.label}>
+          {todo.label} {todo.saving.state === "pending" && "(saving)"}
+        </span>
         <button type="button" onClick={this.archive}>
           Archive
         </button>
