@@ -3,7 +3,9 @@ import { Container } from "inversify"
 import { TodosStore } from "./services/TodosStore"
 // plop: service import
 
-export const container = new Container()
+export const container = new Container({
+  defaultScope: "Singleton",
+})
 
 // shortcuts
 export const get = shortcut(container.get)
