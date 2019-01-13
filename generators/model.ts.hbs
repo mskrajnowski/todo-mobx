@@ -1,7 +1,28 @@
-import { observable } from "mobx"
 import uuid4 from "uuid/v4"
 
-export class {{ pascalCase name }} {
-  readonly id = uuid4()
-  @observable prop = "value"
+import { Model, ModelConstructor } from "./Model"
+
+export class {{ pascalCase name }} implements Model<Data> {
+  constructor(public readonly id = uuid4()) {}
+
+  serialize(): Data {
+    return {
+      id: this.id,
+    }
+  }
+
+  static deserialize(data: Data): {{ pascalCase name }} {
+    const { id, ...unchanged } = data
+
+    return Object.assign(new {{ pascalCase name }}(id), {
+      ...unchanged,
+    })
+  }
+}
+
+// make sure {{ pascalCase name }} implements required static methods
+{{ pascalCase name }} as ModelConstructor<Data, {{ pascalCase name }}>
+
+interface Data {
+  id: string
 }
