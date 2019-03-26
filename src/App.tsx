@@ -11,7 +11,7 @@ import { TodosStore } from "./services/TodosStore"
 
 @observer
 class App extends Component {
-  private todos = get<TodosStore>(TodosStore)
+  private todos = get(TodosStore)
 
   private orderTodos(todos: Todo[]) {
     return orderBy(todos, ["created"], ["desc"])

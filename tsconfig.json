@@ -15,7 +15,6 @@
     "noEmit": true,
     "jsx": "preserve",
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
     "types": ["reflect-metadata", "@types/jest"]
   },
   "include": ["src"]

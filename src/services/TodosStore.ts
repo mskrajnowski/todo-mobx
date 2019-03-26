@@ -1,11 +1,10 @@
-import { injectable, inject, decorate } from "inversify"
+import { helpers } from "inversify-vanillajs-helpers"
 import { observable, action, computed, reaction, runInAction } from "mobx"
 
 import { Todo } from "../models/Todo"
 import { Storage, STORAGE } from "./Storage"
 import { fromPromise } from "mobx-utils"
 
-@injectable()
 export class TodosStore {
   @observable state: "loading" | "ready" = "loading"
   @computed get isReady() {
@@ -72,4 +71,4 @@ export class TodosStore {
   }
 }
 
-decorate(inject(STORAGE) as ParameterDecorator, TodosStore, 0)
+helpers.annotate(TodosStore, [STORAGE])
