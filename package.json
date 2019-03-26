@@ -40,6 +40,6 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "plop": "^2.2.0"
+    "plop": "^2.3.0"
   }
 }
